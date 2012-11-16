@@ -39,6 +39,8 @@ var asPromise = (function () {
     while (callback = this._success.shift()) {
       callback.apply(this.context, this.resolved);
     }
+
+    return this;
   }
 
   function reject() {
@@ -48,6 +50,8 @@ var asPromise = (function () {
     while (callback = this._error.shift()) {
       callback.apply(this.context, this.rejected);
     }
+
+    return this;
   }
 
   return function () {
