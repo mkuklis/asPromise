@@ -13,7 +13,7 @@ var asPromise = (function () {
   function then(success, error) {
     if (success) {
       if (this.resolved) {
-        success.apply(this.context, this.resolved);
+        success.apply(this, this.resolved);
       }
       else {
         this._success.push(success);
@@ -22,7 +22,7 @@ var asPromise = (function () {
 
     if (error) {
       if (this.rejected) {
-        error.apply(this.context, this.rejected);
+        error.apply(this, this.rejected);
       }
       else {
         this._error.push(error);
@@ -37,7 +37,7 @@ var asPromise = (function () {
     this.resolved = arguments;
     this._error = [];
     while (callback = this._success.shift()) {
-      callback.apply(this.context, this.resolved);
+      callback.apply(this, this.resolved);
     }
 
     return this;
@@ -48,7 +48,7 @@ var asPromise = (function () {
     this.rejected = arguments;
     this._success = [];
     while (callback = this._error.shift()) {
-      callback.apply(this.context, this.rejected);
+      callback.apply(this, this.rejected);
     }
 
     return this;
